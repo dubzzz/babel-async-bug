@@ -1,10 +1,13 @@
-async function code(p, methodName, ...args) {
+async function code(p, ...args) {
   // Works fine
   const pAwaited = await p;
-  console.log(pAwaited[methodName](...args));
+  console.log(pAwaited.print(...args));
+
+  // Works fine
+  console.log((await p).print());
 
   // Fails with "TypeError: Cannot read property 'x' of undefined"
-  console.log((await p)[methodName](...args));
+  console.log((await p).print(...args));
 }
 
 // Example
@@ -16,4 +19,4 @@ const instance = {
   }
 };
 const promiseInstance = Promise.resolve(instance);
-code(promiseInstance, "print");
+code(promiseInstance);
